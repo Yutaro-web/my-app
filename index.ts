@@ -32,13 +32,14 @@ app.get("/", async (req, res) => {
 // ユーザー追加
 app.post("/users", async (req, res) => {
   const name = req.body.name;
+  const age = req.body.age === "" ? null : Number(req.body.age);
 
   if (name) {
     const newUser = await prisma.user.create({
-      data: { name },
+      data: { name, age },
     });
 
-    console.log("ユーザーを追加したぞ:", newUser);
+    console.log("年齢付きで追加したぞ:", newUser);
   }
 
   res.redirect("/");
@@ -47,3 +48,4 @@ app.post("/users", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
